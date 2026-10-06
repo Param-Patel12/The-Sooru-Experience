@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #24382d;
+  background: #f4ede0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --forest: #24382d;
+  --ivory: #f4ede0;
+  --terracotta: #9b4938;
+  --gold: #b89968;
+  --sage: #71806b;
+  --serif: 'Playfair Display', Georgia, serif;
+  --gutter: clamp(1.25rem, 5.5vw, 6.5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { min-width: 320px; scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
+html, body { overflow-x: clip; }
+body { min-width: 320px; margin: 0; }
+body, button, input, textarea { font-family: 'DM Sans', sans-serif; }
+button, input, textarea { font-size: inherit; }
+img { display: block; max-width: 100%; }
+picture { display: contents; }
+a { color: inherit; }
+::selection { color: var(--ivory); background: var(--terracotta); }
