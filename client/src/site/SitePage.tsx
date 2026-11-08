@@ -8,6 +8,7 @@ import { GallerySection } from '../sections/GallerySection'
 import { HeroSection } from '../sections/HeroSection'
 import { InteriorsSection } from '../sections/InteriorsSection'
 import { LocationSection } from '../sections/LocationSection'
+import { MorePhotosSection } from '../sections/MorePhotosSection'
 import { StorySection } from '../sections/StorySection'
 import './site.css'
 
@@ -23,6 +24,7 @@ export default function SitePage() {
         <AccommodationSection />
         <InteriorsSection />
         <GallerySection />
+        <MorePhotosSection />
         <LocationSection />
         <EnquirySection />
       </main>
