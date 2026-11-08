@@ -5,7 +5,7 @@
   "buildCommand": "npm --prefix client run build",
   "outputDirectory": "client/dist",
   "cleanUrls": true,
-  "trailingSlash": false,
+  "trailingSlash": true,
   "functions": {
     "api/enquiry.ts": {
       "memory": 128,
@@ -34,6 +34,26 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "thesooru\\.com" }],
+      "destination": "https://www.thesooruexperience.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www\\.thesooru\\.com" }],
+      "destination": "https://www.thesooruexperience.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "thesooruexperience\\.com" }],
+      "destination": "https://www.thesooruexperience.com/:path*",
+      "permanent": true
     }
   ],
   "rewrites": [

@@ -1,6 +1,7 @@
 import { ArrowUp, ArrowUpRight } from 'lucide-react'
-import { bookingUrl, instagramUrl, photographs } from '../data/siteContent'
+import { instagramUrl, photographs } from '../data/siteContent'
 import { PropertyImage } from './PropertyImage'
+import { BookingButton } from './BookingButton'
 
 export function SiteFooter() {
   return (
@@ -18,7 +19,7 @@ export function SiteFooter() {
       </div>
       <div className="site-footer__bottom">
         <div className="site-footer__links">
-          <a className="site-footer__book" href={bookingUrl} target="_blank" rel="noopener noreferrer">BOOK ON AIRBNB <ArrowUpRight size={15} aria-hidden="true" /></a>
+          <BookingButton className="site-footer__book" label="View on Airbnb" location="footer.booking" variant="link" />
           <a className="footer-social" href={instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Follow The Sooru Experience on Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="18" cy="6" r=".8" fill="currentColor" /></svg>
             Instagram <ArrowUpRight size={13} aria-hidden="true" />

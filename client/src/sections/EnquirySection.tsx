@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowUpRight, LoaderCircle } from 'lucide-react'
-import { bookingUrl } from '../data/siteContent'
+import { BookingButton } from '../components/BookingButton'
 
 type SubmissionState = 'idle' | 'sending' | 'success' | 'error'
 type EnquiryResponse = { ok?: boolean; delivered?: boolean; error?: string }
@@ -51,9 +51,7 @@ export function EnquirySection() {
         <p className="eyebrow">Your days in the hills</p>
         <h2 id="enquiry-title">COME, STAY<br /><em>AWHILE.</em></h2>
         <p>Have a question about your stay?<br />Send us an enquiry.</p>
-        <a className="button button--forest enquiry__booking" href={bookingUrl} target="_blank" rel="noopener noreferrer">
-          BOOK ON AIRBNB <ArrowUpRight size={16} aria-hidden="true" />
-        </a>
+        <BookingButton className="enquiry__booking" label="View on Airbnb" location="homepage.enquiry" />
       </div>
       <form className="enquiry-form" onSubmit={handleSubmit} aria-busy={status === 'sending'}>
         <div className="form-row">

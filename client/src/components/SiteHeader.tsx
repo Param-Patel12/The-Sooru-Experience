@@ -1,25 +1,28 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import gsap from 'gsap'
-import { bookingUrl } from '../data/siteContent'
+import { BookingButton } from './BookingButton'
+import { trackNavigationClick } from '../analytics/ga4.mjs'
 
 const links = [
-  { href: '#story', label: 'Our story' },
-  { href: '#courtyard', label: 'Courtyard' },
-  { href: '#accommodation', label: 'Bedrooms' },
-  { href: '#gallery', label: 'Gallery' },
-  { href: '#location', label: 'Location' },
-  { href: '#enquire', label: 'Enquire' },
+  { href: '/', label: 'Home' },
+  { href: '/stay/', label: 'The stay' },
+  { href: '/experiences/', label: 'Experiences' },
+  { href: '/gallery/', label: 'Gallery' },
+  { href: '/location/', label: 'Location' },
+  { href: '/faq/', label: 'FAQs' },
+  { href: '/about/', label: 'About' },
 ]
+
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
 function motionReduced() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-export function SiteHeader() {
+export function SiteHeader({ currentPath = '/' }: { currentPath?: string }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [activeLink, setActiveLink] = useState('')
   const menuToggleRef = useRef<HTMLButtonElement>(null)
   const navRef = useRef<HTMLElement>(null)
   const menuTimeline = useRef<gsap.core.Timeline | null>(null)
@@ -62,23 +65,7 @@ export function SiteHeader() {
     }
   }, [])
 
-  useEffect(() => {
-    const observed = links
-      .map((link) => ({ id: link.href.slice(1), element: document.getElementById(link.href.slice(1)) }))
-      .filter((item): item is { id: string; element: HTMLElement } => item.element instanceof HTMLElement)
-    if (!('IntersectionObserver' in window) || observed.length === 0) return
-
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top))[0]
-      if (visible) setActiveLink((visible.target as HTMLElement).id)
-    }, { rootMargin: '-30% 0px -58% 0px', threshold: 0 })
-    observed.forEach(({ element }) => observer.observe(element))
-    return () => observer.disconnect()
-  }, [])
-
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!menuOpen || !navRef.current || !menuToggleRef.current) return
     const nav = navRef.current
     const toggleBounds = menuToggleRef.current.getBoundingClientRect()
@@ -190,7 +177,7 @@ export function SiteHeader() {
 
   return (
     <header className={`site-header${scrolled ? ' site-header--scrolled' : ''}${menuOpen ? ' site-header--menu-open' : ''}`}>
-      <a className="wordmark" href="#top" tabIndex={menuOpen ? -1 : undefined} aria-label="The Sooru Experience home" onClick={(event) => { event.preventDefault(); navigateTo('#top', menuOpen) }}>
+      <a className="wordmark" href={currentPath === '/' ? '#top' : '/'} tabIndex={menuOpen ? -1 : undefined} aria-label="The Sooru Experience home" onClick={(event) => { if (currentPath === '/') { event.preventDefault(); navigateTo('#top', menuOpen) } }}>
         <span className="wordmark__name">sooru</span>
         <span className="wordmark__descriptor">THE SOORU EXPERIENCE</span>
       </a>
@@ -215,18 +202,16 @@ export function SiteHeader() {
           {links.map((link, index) => (
             <a
               key={link.href}
-              className={`site-nav__link site-nav__entry${activeLink === link.href.slice(1) ? ' is-active' : ''}`}
+              className={`site-nav__link site-nav__entry${currentPath === link.href ? ' is-active' : ''}`}
               href={link.href}
-              aria-current={activeLink === link.href.slice(1) ? 'location' : undefined}
-              onClick={(event) => { event.preventDefault(); navigateTo(link.href, menuOpen) }}
+              aria-current={currentPath === link.href ? 'page' : undefined}
+              onClick={() => trackNavigationClick({ targetPath: link.href, linkLabel: link.label })}
             >
               <span className="site-nav__number">{String(index + 1).padStart(2, '0')}</span><span>{link.label}</span>
             </a>
           ))}
         </div>
-        <a className="nav-booking site-nav__entry" href={bookingUrl} target="_blank" rel="noopener noreferrer" onClick={() => menuOpen && closeMenu()}>
-          <span>Find us on Airbnb</span><ArrowUpRight size={15} aria-hidden="true" />
-        </a>
+        <BookingButton label="Check Availability" location="header.navigation" variant="link" className="nav-booking site-nav__entry" />
       </nav>
     </header>
   )

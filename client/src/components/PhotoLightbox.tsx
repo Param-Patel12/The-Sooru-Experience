@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useRef, type KeyboardEvent } from 'react'
 import { ArrowLeft, ArrowRight, X } from 'lucide-react'
 import { PropertyImage } from './PropertyImage'
+import { trackGalleryImageView } from '../analytics/ga4.mjs'
 
 export interface GalleryPhoto {
   image: string
@@ -9,6 +10,8 @@ export interface GalleryPhoto {
   width: number
   height: number
   webp?: boolean
+  responsiveSrcSet?: string
+  sizes?: string
 }
 
 interface PhotoLightboxProps {
@@ -49,6 +52,10 @@ export function PhotoLightbox({ photos, activeIndex, onActiveIndexChange, open, 
     }
   }, [open])
 
+  useEffect(() => {
+    if (open && activePhoto) trackGalleryImageView({ imageUrl: activePhoto.image })
+  }, [open, activePhoto])
+
   function handleKeyDown(event: KeyboardEvent<HTMLDialogElement>) {
     if (event.key === 'ArrowLeft') {
       event.preventDefault()
@@ -74,7 +81,7 @@ export function PhotoLightbox({ photos, activeIndex, onActiveIndexChange, open, 
       <button className="photo-lightbox__close" type="button" aria-label="Close enlarged photograph" onClick={onClose}><X size={22} aria-hidden="true" /></button>
       <button className="photo-lightbox__arrow photo-lightbox__arrow--previous" type="button" aria-label="Previous photograph" onClick={showPrevious}><ArrowLeft size={21} aria-hidden="true" /></button>
       <figure>
-        <PropertyImage src={activePhoto.image} alt={activePhoto.alt} width={activePhoto.width} height={activePhoto.height} loading={open ? 'eager' : 'lazy'} fetchPriority={open ? 'high' : 'auto'} decoding="async" webp={activePhoto.webp} />
+        <PropertyImage src={activePhoto.image} alt={activePhoto.alt} width={activePhoto.width} height={activePhoto.height} loading={open ? 'eager' : 'lazy'} fetchPriority={open ? 'high' : 'auto'} decoding="async" webp={activePhoto.webp} responsiveSrcSet={activePhoto.responsiveSrcSet} sizes={activePhoto.sizes} />
         <figcaption>{activePhoto.caption}<span>{activeIndex + 1} / {photos.length}</span></figcaption>
       </figure>
       <button className="photo-lightbox__arrow photo-lightbox__arrow--next" type="button" aria-label="Next photograph" onClick={showNext}><ArrowRight size={21} aria-hidden="true" /></button>

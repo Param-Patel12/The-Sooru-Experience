@@ -19,6 +19,7 @@ const regionalNotes = [
 ]
 
 function getSceneQuality(): SceneQuality {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return 'low'
   const device = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } }
   const compact = window.matchMedia('(max-width: 760px), (pointer: coarse)').matches
   const tablet = window.matchMedia('(max-width: 1100px)').matches

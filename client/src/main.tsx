@@ -1,10 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode, createElement } from 'react'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import './index.css'
-import SitePage from './site/SitePage.tsx'
+import { SiteRouter } from './site/SiteRouter'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <SitePage />
-  </StrictMode>,
-)
+const rootElement = document.getElementById('root')!
+const application = createElement(StrictMode, null, createElement(SiteRouter, { path: window.location.pathname }))
+
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, application)
+} else {
+  createRoot(rootElement).render(application)
+}

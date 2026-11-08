@@ -160,7 +160,7 @@ export function AccommodationSection() {
             {bedroomPhotographs.map((photo, index) => (
               <article className="accommodation-card" key={photo.image} ref={(node) => { cards.current[index] = node }}>
                 <button className="accommodation-card__button" type="button" aria-label={`View photograph ${index + 1} of ${bedroomPhotographs.length}: ${photo.alt}`} onClick={() => { currentIndex.current = index; setActiveIndex(index); setLightboxOpen(true) }}>
-                  <PropertyImage className="accommodation-card__photo" src={photo.image} alt="" width={photo.width} height={photo.height} loading="lazy" decoding="async" />
+                  <PropertyImage className="accommodation-card__photo" src={photo.image} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
                   <span className="accommodation-card__shade" aria-hidden="true" />
                   <span className="accommodation-card__caption"><span className="accommodation-card__index">{String(index + 1).padStart(2, '0')}</span><span>{photo.caption}</span></span>
                 </button>

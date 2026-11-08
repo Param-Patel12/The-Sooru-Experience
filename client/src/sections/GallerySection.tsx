@@ -122,7 +122,7 @@ export function GallerySection() {
             aria-label={`Open photograph ${index + 1} of ${propertyPhotographs.length}: ${photo.caption}`}
             onClick={() => { setActiveIndex(index); setLightboxOpen(true) }}
           >
-            <PropertyImage src={photo.image} alt="" width={photo.width} height={photo.height} loading="lazy" decoding="async" />
+            <PropertyImage src={photo.image} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
             <span className="property-gallery__caption"><span>{photo.caption}</span><span>{String(index + 1).padStart(2, '0')}</span></span>
           </button>
         ))}

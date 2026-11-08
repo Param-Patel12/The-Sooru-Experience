@@ -45,7 +45,7 @@ export function MorePhotosSection() {
             aria-label={`Open photograph ${index + 1} of ${additionalPropertyPhotographs.length}: ${photo.caption}`}
             onClick={() => { setActiveIndex(index); setLightboxOpen(true) }}
           >
-            <PropertyImage src={photo.image} alt="" width={photo.width} height={photo.height} loading="lazy" decoding="async" webp={false} />
+            <PropertyImage src={photo.image} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" decoding="async" webp={false} responsiveSrcSet={photo.responsiveSrcSet} sizes={photo.sizes} />
             <span className="more-photos__caption">{photo.caption}</span>
           </button>
         ))}

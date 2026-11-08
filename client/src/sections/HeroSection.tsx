@@ -1,10 +1,11 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { ArrowDown } from 'lucide-react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { bookingUrl, photographs } from '../data/siteContent'
+import { photographs } from '../data/siteContent'
 import { PropertyImage } from '../components/PropertyImage'
+import { BookingButton } from '../components/BookingButton'
 import { useReducedMotionPreference } from '../hooks/useReducedMotionPreference'
 import type { HeroMotionState, SceneQuality } from './HeroCamera'
 
@@ -13,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger)
 const HeroScene = lazy(() => import('./HeroScene'))
 
 function getSceneQuality(): SceneQuality {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return 'low'
   const device = navigator as Navigator & {
     deviceMemory?: number
     connection?: { saveData?: boolean }
@@ -155,16 +157,17 @@ export function HeroSection() {
         </Suspense>
       )}
       <div className="hero__content">
-        <p className="eyebrow hero__eyebrow"><span /> A traditional home in the green hills of Malnad</p>
-        <h1 id="hero-title" aria-label="The Sooru Experience">
-          <span className="hero__line"><span className="hero__word">THE</span> <span className="hero__word">SOORU</span></span>
-          <span className="hero__line"><span className="hero__word">EXPERIENCE</span></span>
+        <p className="eyebrow hero__eyebrow"><span /> A homely stay in peaceful natural surroundings</p>
+        <h1 id="hero-title" aria-label="Experience a Peaceful Homestay in Mudigere at The Sooru Experience" className="hero__seo-title">
+          <span className="hero__line"><span className="hero__word">Experience a peaceful</span></span>
+          <span className="hero__line"><span className="hero__word">homestay in Mudigere</span></span>
+          <span className="hero__line hero__brand-line"><span className="hero__word">at The Sooru Experience</span></span>
         </h1>
-        <p className="hero__support">Where the hills feel like home.</p>
+        <p className="hero__support">A homely stay. Beautiful mountain views. Rest in nature.</p>
         <p className="hero__location">CHIKKAMAGALURU <span>·</span> KARNATAKA</p>
         <div className="hero__actions">
           <a className="button button--light" href="#story">Explore Sooru <ArrowDown size={15} aria-hidden="true" /></a>
-          <a className="button button--outline" href={bookingUrl} target="_blank" rel="noopener noreferrer">Book on Airbnb <ArrowUpRight size={15} aria-hidden="true" /></a>
+          <BookingButton className="button--outline" label="Book Your Stay" location="homepage.hero" variant="light" />
         </div>
       </div>
       <a className="hero__scroll" href="#story" aria-label="Scroll to discover The Sooru Experience">

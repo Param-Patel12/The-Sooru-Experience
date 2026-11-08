@@ -16,7 +16,7 @@ export default function SitePage() {
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <SiteHeader />
+      <SiteHeader currentPath="/" />
       <main id="main-content">
         <HeroSection />
         <StorySection />
