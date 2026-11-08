@@ -73,8 +73,8 @@ export const propertyPhotographs = [
 
 const additionalPhotoFiles = [
   'Sooru 1.jpeg', 'Sooru 2.jpeg', 'Sooru 3.jpeg', 'Sooru 4.jpeg',
-  'Sooru 5.jpeg', 'Sooru 6.jpeg', 'Sooru 7.jpeg', 'Sooru 8.jpeg',
-  'sooru 9.jpeg', 'Sooru 10.jpeg', 'Sooru 11.jpeg', 'Sooru 12.jpeg',
+  'Sooru 5.jpeg', 'Sooru 6.jpeg', 'Sooru 7.jpeg',
+  'sooru 8.jpeg', 'sooru 9.jpeg', 'Sooru 10.jpeg', 'Sooru 11.jpeg', 'Sooru 12.jpeg',
   'Sooru 13.jpeg', 'Sooru 14.jpeg', 'Sooru 15.jpeg', 'Sooru 16.jpeg',
   'Sooru 17.jpeg', 'Sooru 18.jpeg', 'Sooru 19.jpeg', 'Sooru 20.jpeg',
   'Sooru 21.jpeg', 'Sooru 22.jpeg', 'Soory 22.jpeg', 'Sooru 23.jpeg',
@@ -84,7 +84,8 @@ const additionalPhotoFiles = [
 export const additionalPropertyPhotographs = additionalPhotoFiles.map((file, index) => ({
   image: `/images/${encodeURIComponent(file)}`,
   alt: `A view of The Sooru Experience, photograph ${index + 1}`,
-  caption: `A closer look at Sooru · ${String(index + 1).padStart(2, '0')}`,
+  caption: `A closer look at Sooru - ${String(index + 1).padStart(2, '0')}`,
   width: 1024,
   height: 1280,
+  webp: false,
 }))

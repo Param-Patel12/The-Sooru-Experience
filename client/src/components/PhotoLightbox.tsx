@@ -8,6 +8,7 @@ export interface GalleryPhoto {
   caption: string
   width: number
   height: number
+  webp?: boolean
 }
 
 interface PhotoLightboxProps {
@@ -73,7 +74,7 @@ export function PhotoLightbox({ photos, activeIndex, onActiveIndexChange, open, 
       <button className="photo-lightbox__close" type="button" aria-label="Close enlarged photograph" onClick={onClose}><X size={22} aria-hidden="true" /></button>
       <button className="photo-lightbox__arrow photo-lightbox__arrow--previous" type="button" aria-label="Previous photograph" onClick={showPrevious}><ArrowLeft size={21} aria-hidden="true" /></button>
       <figure>
-        <PropertyImage src={activePhoto.image} alt={activePhoto.alt} width={activePhoto.width} height={activePhoto.height} loading={open ? 'eager' : 'lazy'} fetchPriority={open ? 'high' : 'auto'} decoding="async" />
+        <PropertyImage src={activePhoto.image} alt={activePhoto.alt} width={activePhoto.width} height={activePhoto.height} loading={open ? 'eager' : 'lazy'} fetchPriority={open ? 'high' : 'auto'} decoding="async" webp={activePhoto.webp} />
         <figcaption>{activePhoto.caption}<span>{activeIndex + 1} / {photos.length}</span></figcaption>
       </figure>
       <button className="photo-lightbox__arrow photo-lightbox__arrow--next" type="button" aria-label="Next photograph" onClick={showNext}><ArrowRight size={21} aria-hidden="true" /></button>
